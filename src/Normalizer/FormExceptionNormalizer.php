@@ -25,7 +25,7 @@ class FormExceptionNormalizer implements NormalizerInterface, SerializerAwareInt
     public function normalize($object, $format = null, array $context = [])
     {
         $data   = [];
-        $errors = $object->getErrors();
+        $errors = $object->getForm()->getErrors(true);
 
         foreach ($errors as $error) {
             $data[$error->getOrigin()->getName()][] = $error->getMessage();

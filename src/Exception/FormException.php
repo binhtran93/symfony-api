@@ -46,11 +46,4 @@ class FormException extends HttpException
     {
         return $this->form;
     }
-
-    /**
-     * @return \Symfony\Component\Form\FormErrorIterator
-     */
-    public function getErrors() {
-        return $this->getForm()->getErrors(true);
-    }
 }
