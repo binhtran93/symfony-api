@@ -55,8 +55,24 @@ class SongController extends AbstractController
         $em->persist($song);
         $em->flush();
 
-        return $this->json([
-            "efef" => 1
-        ]);
+        return new ApiResponse();
+    }
+
+    /**
+     * @Route("/songs/{id}", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @param $id
+     * @return ApiResponse
+     */
+    public function destroy($id) {
+        $em = $this->getDoctrine()->getManager();
+        $song = $em->getRepository(Song::class)->find($id);
+        if (!$song) {
+            throw $this->createNotFoundException('Song not found');
+        }
+
+        $em->remove($song);
+        $em->flush();
+
+        return new ApiResponse();
     }
 }

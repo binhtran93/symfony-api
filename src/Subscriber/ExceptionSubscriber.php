@@ -9,6 +9,7 @@
 namespace App\Subscriber;
 
 
+use App\Exception\FormException;
 use App\Response\ApiResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,17 +57,33 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event) {
         $throwable = $event->getThrowable();
+
         $statusCode = $throwable instanceof HttpExceptionInterface
             ? $throwable->getStatusCode()
             : Response::HTTP_INTERNAL_SERVER_ERROR;
 
-        try {
-            $errors = $this->serializer->normalize($throwable);
-        } catch (\Throwable $t) {
-            $errors = [];
+        $errors = [];
+
+        $isSupportErrors = in_array(get_class($throwable), $this->supportErrorsException());
+        if ($isSupportErrors) {
+            try {
+                $errors = $this->serializer->normalize($throwable);
+            } catch (\Throwable $t) {
+                $errors = [];
+            }
         }
 
         $response = new ApiResponse($throwable->getMessage(), null, $errors, $statusCode);
         $event->setResponse($response);
+    }
+
+    /**
+     * @return array
+     */
+    private function supportErrorsException() : array
+    {
+        return [
+            FormException::class
+        ];
     }
 }

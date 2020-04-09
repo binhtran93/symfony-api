@@ -10,6 +10,7 @@ namespace App\Response;
 
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Serializer;
 
 class ApiResponse extends JsonResponse
 {
@@ -22,7 +23,7 @@ class ApiResponse extends JsonResponse
      * @param array $headers
      * @param bool $json
      */
-    public function __construct(string $message, $data = null, $errors = null, int $status = 200, array $headers = [], bool $json = false)
+    public function __construct(string $message = "Success", $data = null, $errors = null, int $status = 200, array $headers = [], bool $json = false)
     {
         $response = [
             'message' => $message,

@@ -20,12 +20,12 @@ class Song
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $streamUrl;
 
