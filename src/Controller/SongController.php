@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Album;
 use App\Entity\Song;
+use App\Exception\FormException;
 use App\Form\Type\SongType;
+use App\Response\ApiResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -21,10 +24,7 @@ class SongController extends AbstractController
     public function index()
     {
         $em = $this->getDoctrine()->getManager();
-//        $songs = $em->getRepository(Song::class)->findAll();
-
-        $query = $em->createQuery("SELECT s, a FROM App\Entity\Song s JOIN s.album a");
-        $songs = $query->getArrayResult(); // array of ForumUser objects
+        $songs = $em->getRepository(Song::class)->findAll();
 
         return $this->json($songs);
     }
@@ -42,7 +42,7 @@ class SongController extends AbstractController
 
         $form->submit($data);
         if (!$form->isValid()) {
-            return $this->json($form->getErrors(true));
+            throw new FormException($form);
         }
 
         $em = $this->getDoctrine()->getManager();

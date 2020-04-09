@@ -25,3 +25,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+#   Test using listener
+#    App\Listener\ExceptionListener:
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.exception }
+
+#   test config subscriber without autoconfigure
+#    App\Subscriber\ExceptionSubscriber:
+#        tags:
+#            - { name: kernel.event_subscriber }
