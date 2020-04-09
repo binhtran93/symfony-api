@@ -15,9 +15,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;
 
-class FormExceptionNormalizer implements NormalizerInterface, SerializerAwareInterface
+class FormExceptionNormalizer implements NormalizerInterface
 {
-    use SerializerAwareTrait;
     /**
      * @param FormException $object
      * @inheritdoc
