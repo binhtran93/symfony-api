@@ -50,10 +50,6 @@ class SongController extends AbstractController
         /** @var Song $song */
         $song = $form->getData();
 
-        //@TODO automate
-//        $song->setCreatedAt(new \DateTime());
-//        $song->setUpdatedAt(new \DateTime());
-
         $em->persist($song);
         $em->flush();
 

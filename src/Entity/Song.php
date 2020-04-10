@@ -56,7 +56,7 @@ class Song
     private $album;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Playlist", mappedBy="songs", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Playlist", mappedBy="songs")
      */
     private $playlists;
 

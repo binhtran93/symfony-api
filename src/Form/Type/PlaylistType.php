@@ -4,16 +4,13 @@
 namespace App\Form\Type;
 
 
-use App\Entity\Album;
 use App\Entity\Playlist;
-use App\Entity\Song;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PlaylistType extends AbstractType
@@ -27,17 +24,17 @@ class PlaylistType extends AbstractType
                 ],
             ])
             ->add('thumbnail');
-//            ->add('songs', TextType::class, [
-////                'entry_type' => Song::class,
-//                'expanded' => true,
-//                'multiple' => true
+//            ->add('song_ids', CollectionType::class, [
+//                'entry_type' => IntegerType::class,
+//                'allow_add' => true
 //            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Playlist::class
+            'data_class' => Playlist::class,
+            'allow_extra_fields' => true
         ]);
     }
 }

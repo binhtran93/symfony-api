@@ -21,10 +21,8 @@ class PlaylistController extends AbstractController
      */
     public function index(PlaylistRepository $playlistRepository)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PlaylistController.php',
-        ]);
+        $playlists = $playlistRepository->findAll();
+        return $this->json($playlists);
     }
 
     /**
@@ -33,10 +31,14 @@ class PlaylistController extends AbstractController
      * @return ApiResponse
      */
     public function store(Request $request) {
-        $data = $request->request->all();
+        $data = $request->getContent();
+        $data = json_decode($data, true);
 
         $form = $this->createForm(PlaylistType::class);
-        $form->submit($data);
+        $form->submit([
+            'name' => $data['name'],
+            'thumbnail' => $data['thumbnail']
+        ]);
 
         if (!$form->isValid()) {
             throw new FormException($form);
@@ -46,8 +48,14 @@ class PlaylistController extends AbstractController
         /** @var Playlist $playlist */
         $playlist = $form->getData();
 
-        $songs = $em->getRepository(Song::class)->findAll();
-        foreach ($songs as $song) {
+        $songIds = $data['song_ids'] ?? [];
+        foreach ($songIds as $songId) {
+            /** @var Song $song */
+            $song = $em->getRepository(Song::class)->find($songId);
+            if (!$song) {
+                continue;
+            }
+
             $playlist->addSong($song);
         }
 
