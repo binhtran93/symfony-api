@@ -51,8 +51,8 @@ class SongController extends AbstractController
         $song = $form->getData();
 
         //@TODO automate
-        $song->setCreatedAt(new \DateTime());
-        $song->setUpdatedAt(new \DateTime());
+//        $song->setCreatedAt(new \DateTime());
+//        $song->setUpdatedAt(new \DateTime());
 
         $em->persist($song);
         $em->flush();
@@ -67,6 +67,7 @@ class SongController extends AbstractController
      */
     public function destroy($id) {
         $em = $this->getDoctrine()->getManager();
+
         $song = $em->getRepository(Song::class)->find($id);
         if (!$song) {
             throw $this->createNotFoundException('Song not found');
