@@ -20,32 +20,27 @@ class SongRepository extends ServiceEntityRepository
     }
 
 
-    // /**
-    //  * @return Song[] Returns an array of Song objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function findAllOrderDescByTitleUsingQueryBuilder(array $relations = []) {
+        $builder = $this->createQueryBuilder('s')
+            ->orderBy('s.title', 'desc');
 
-    /*
-    public function findOneBySomeField($value): ?Song
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (in_array('album', $relations)) {
+            $builder
+                ->addSelect('album')
+                ->innerJoin('s.album', 'album');
+        }
+
+        if (in_array('playlists', $relations)) {
+            $builder
+                ->addSelect('playlist')
+                ->innerJoin('s.playlists', 'playlist');
+        }
+
+        $query = $builder->getQuery()->getResult();
+        return $query;
     }
-    */
+
+    public function findAllUsingDql($relations) {
+
+    }
 }

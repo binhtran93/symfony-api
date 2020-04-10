@@ -6,6 +6,7 @@ use App\Entity\Album;
 use App\Entity\Song;
 use App\Exception\FormException;
 use App\Form\Type\SongType;
+use App\Repository\SongRepository;
 use App\Response\ApiResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,13 +19,12 @@ class SongController extends AbstractController
 {
     /**
      * @Route("/songs", name="song", methods={"GET"})
-     * @param SerializerInterface $serializer
+     * @param SongRepository $songRepository
      * @return JsonResponse
      */
-    public function index()
+    public function index(SongRepository $songRepository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $songs = $em->getRepository(Song::class)->findAll();
+        $songs = $songRepository->findAllOrderDescByTitleUsingQueryBuilder(['album', 'playlists']);
 
         return $this->json($songs);
     }

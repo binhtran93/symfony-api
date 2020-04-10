@@ -31,6 +31,7 @@ class Playlist
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Song", inversedBy="playlists")
+     * @ORM\JoinTable(name="playlist_songs")
      */
     private $songs;
 

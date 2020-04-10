@@ -47,12 +47,12 @@ class Song
     private $deletedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="songs", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="songs")
      */
     private $album;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Playlist", mappedBy="songs")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Playlist", mappedBy="songs", fetch="EAGER")
      */
     private $playlists;
 

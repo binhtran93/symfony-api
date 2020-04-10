@@ -6,6 +6,7 @@ use App\Entity\Playlist;
 use App\Entity\Song;
 use App\Exception\FormException;
 use App\Form\Type\PlaylistType;
+use App\Repository\PlaylistRepository;
 use App\Response\ApiResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +16,10 @@ class PlaylistController extends AbstractController
 {
     /**
      * @Route("/playlists", name="playlist", methods={"GET"})
+     * @param PlaylistRepository $playlistRepository
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function index()
+    public function index(PlaylistRepository $playlistRepository)
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
@@ -54,3 +57,4 @@ class PlaylistController extends AbstractController
         return new ApiResponse();
     }
 }
+

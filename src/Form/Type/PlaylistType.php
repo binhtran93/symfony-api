@@ -26,12 +26,12 @@ class PlaylistType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('thumbnail')
-            ->add('songs', TextType::class, [
-//                'entry_type' => Song::class,
-                'expanded' => true,
-                'multiple' => true
-            ]);
+            ->add('thumbnail');
+//            ->add('songs', TextType::class, [
+////                'entry_type' => Song::class,
+//                'expanded' => true,
+//                'multiple' => true
+//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
