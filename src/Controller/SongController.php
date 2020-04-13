@@ -12,6 +12,7 @@ use App\Repository\SongRepository;
 use App\Response\ApiResponse;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Schema\View;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class SongController extends AbstractController
 {
     /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY", message="HAHAHA")
      * @Route("/songs", name="song", methods={"GET"})
      * @param SongRepository $songRepository
      * @return JsonResponse
