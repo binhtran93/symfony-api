@@ -6,3 +6,8 @@ Lazy loading might give you a slight performance improvement when your listener 
 
 ### Priorities for Event Listeners¶
 In case you have multiple listeners for the same event you can control the order in which they are invoked using the priority attribute on the tag. Priorities are defined with positive or negative integers (they default to 0). Higher numbers mean that listeners are invoked earlier.
+
+
+Lifecycle callbacks
+Event listener/subscribers
+Entity listener

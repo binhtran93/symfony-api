@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Album;
 use App\Entity\Song;
+use App\Event\TestEvent;
 use App\Exception\FormException;
 use App\Form\Type\SongType;
+use App\Listener\TestListener;
 use App\Repository\SongRepository;
 use App\Response\ApiResponse;
+use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Schema\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

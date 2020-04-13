@@ -4,11 +4,16 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\EntityListeners({"App\Listener\UserListener"})
  * @ORM\Table(name="songs")
  * @ORM\Entity(repositoryClass="App\Repository\SongRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", hardDelete=false)
@@ -168,5 +173,12 @@ class Song
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist(LifecycleEventArgs $args) {
+        echo 1;
     }
 }
