@@ -77,6 +77,15 @@ class Playlist
         return $this->songs;
     }
 
+    public function setSongs($songs)
+    {
+        foreach ($songs as $song) {
+            $this->addSong($song);
+        }
+
+        return $this;
+    }
+
     public function addSong(Song $song): self
     {
         if (!$this->songs->contains($song)) {

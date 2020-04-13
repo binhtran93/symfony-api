@@ -35,10 +35,7 @@ class PlaylistController extends AbstractController
         $data = json_decode($data, true);
 
         $form = $this->createForm(PlaylistType::class);
-        $form->submit([
-            'name' => $data['name'],
-            'thumbnail' => $data['thumbnail']
-        ]);
+        $form->submit($data);
 
         if (!$form->isValid()) {
             throw new FormException($form);

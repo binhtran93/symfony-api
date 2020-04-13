@@ -11,6 +11,7 @@ namespace App\Subscriber;
 
 use App\Exception\FormException;
 use App\Response\ApiResponse;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -25,9 +26,13 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /** @var Serializer $serializer */
     private $serializer;
 
-    public function __construct(SerializerInterface $serializer)
+    /** @var LoggerInterface $logger */
+    private $logger;
+
+    public function __construct(SerializerInterface $serializer, LoggerInterface $logger)
     {
         $this->serializer = $serializer;
+        $this->logger = $logger;
     }
 
     /**
@@ -57,6 +62,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event) {
         $throwable = $event->getThrowable();
+        $this->logger->error($throwable);
 
         $statusCode = $throwable instanceof HttpExceptionInterface
             ? $throwable->getStatusCode()

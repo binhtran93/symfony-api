@@ -5,7 +5,9 @@ namespace App\Form\Type;
 
 
 use App\Entity\Playlist;
+use App\Form\DataTransformer\SongToIdTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,6 +17,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PlaylistType extends AbstractType
 {
+
+    /**
+     * @var SongToIdTransformer $transform
+     */
+    private $transform;
+
+    public function __construct(SongToIdTransformer $transform)
+    {
+        $this->transform = $transform;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -23,11 +36,16 @@ class PlaylistType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('thumbnail');
-//            ->add('song_ids', CollectionType::class, [
-//                'entry_type' => IntegerType::class,
-//                'allow_add' => true
-//            ]);
+            ->add('thumbnail', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
+            ->add('songs', TextType::class, [
+                'invalid_message' => 'Not a valid song id',
+            ]);
+
+        $builder->get('songs')->addModelTransformer($this->transform);
     }
 
     public function configureOptions(OptionsResolver $resolver)
