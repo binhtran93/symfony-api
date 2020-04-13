@@ -23,7 +23,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 class SongController extends AbstractController
 {
     /**
-     * @IsGranted("IS_AUTHENTICATED_FULLY", message="HAHAHA")
      * @Route("/songs", name="song", methods={"GET"})
      * @param SongRepository $songRepository
      * @return JsonResponse
